@@ -1,9 +1,16 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: lightsub-gateway
-
+    
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
       routes:
         - id: auth-service
           uri: lb://auth-service
@@ -25,7 +32,13 @@ spring:
           uri: lb://billing-service
           predicates:
             - Path=/billing/**
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
 
 security:
   jwt:
-    secret: ${JWT_SECRET} 
+    secret: ${JWT_SECRET}
