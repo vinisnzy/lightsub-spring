@@ -1,7 +1,7 @@
 spring:
   application:
     name: lightsub-gateway
-  
+
   cloud:
     gateway:
       routes:
@@ -25,3 +25,7 @@ spring:
           uri: lb://billing-service
           predicates:
             - Path=/billing/**
+
+security:
+  jwt:
+    secret: ${JWT_SECRET} 
