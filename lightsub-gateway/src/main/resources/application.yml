@@ -4,34 +4,36 @@ server:
 spring:
   application:
     name: lightsub-gateway
-    
+
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      routes:
-        - id: auth-service
-          uri: lb://auth-service
-          predicates:
-            - Path=/auth/**
-        - id: user-service
-          uri: lb://user-service
-          predicates:
-            - Path=/user/**
-        - id: subscription-service
-          uri: lb://subscription-service
-          predicates:
-            - Path=/subscription/**
-        - id: notification-service
-          uri: lb://notification-service
-          predicates:
-            - Path=/notification/**
-        - id: billing-service
-          uri: lb://billing-service
-          predicates:
-            - Path=/billing/**
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
+          routes:
+            - id: auth-service
+              uri: lb://lightsub-auth-service
+              predicates:
+                - Path=/auth/**
+            # - id: user-service
+            #   uri: lb://user-service
+            #   predicates:
+            #     - Path=/user/**
+            # - id: subscription-service
+            #   uri: lb://subscription-service
+            #   predicates:
+            #     - Path=/subscription/**
+            # - id: notification-service
+            #   uri: lb://notification-service
+            #   predicates:
+            #     - Path=/notification/**
+            # - id: billing-service
+            #   uri: lb://billing-service
+            #   predicates:
+            #     - Path=/billing/**
 eureka:
   client:
     serviceUrl:
