@@ -21,8 +21,9 @@ public class SecurityConfig {
   public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
     return http
         .csrf(ServerHttpSecurity.CsrfSpec::disable)
-        .authorizeExchange(exchanges -> exchanges
-            .anyExchange().permitAll())
+        .authorizeExchange(exchange -> exchange
+            .pathMatchers("/auth/**").permitAll()
+            .anyExchange().authenticated())
         .oauth2ResourceServer(oauth -> oauth.jwt(jwt -> {
         }))
         .build();
