@@ -27,6 +27,9 @@ public class Subscription {
   private UUID id;
 
   @Column(nullable = false)
+  private UUID userId;
+
+  @Column(nullable = false)
   private String name;
 
   @Column(nullable = false, precision = 10, scale = 2)
