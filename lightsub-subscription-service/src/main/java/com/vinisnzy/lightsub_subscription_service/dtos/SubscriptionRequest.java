@@ -14,9 +14,6 @@ import jakarta.validation.constraints.Positive;
 
 public record SubscriptionRequest(
 
-    @NotNull(message = "User ID cannot be blank")
-    UUID userId,
-
     @NotBlank(message = "Name cannot be blank")
     String name,
 
@@ -34,9 +31,9 @@ public record SubscriptionRequest(
     @NotBlank(message = "Category cannot be blank")
     String category
 ) {
-    public static Subscription toEntity(SubscriptionRequest request) {
+    public static Subscription toEntity(UUID userId, SubscriptionRequest request) {
         var subscription = new Subscription(); 
-        subscription.setUserId(request.userId());
+        subscription.setUserId(userId);
         subscription.setName(request.name());
         subscription.setPrice(request.price());
         subscription.setBillingPeriod(request.billingPeriod());
