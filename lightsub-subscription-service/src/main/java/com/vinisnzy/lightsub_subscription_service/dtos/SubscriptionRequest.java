@@ -2,7 +2,9 @@ package com.vinisnzy.lightsub_subscription_service.dtos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.UUID;
 
+import com.vinisnzy.lightsub_subscription_service.model.Subscription;
 import com.vinisnzy.lightsub_subscription_service.model.dtos.BillingPeriod;
 
 import jakarta.validation.constraints.Future;
@@ -12,8 +14,8 @@ import jakarta.validation.constraints.Positive;
 
 public record SubscriptionRequest(
 
-    @NotBlank(message = "User ID cannot be blank")
-    String userId,
+    @NotNull(message = "User ID cannot be blank")
+    UUID userId,
 
     @NotBlank(message = "Name cannot be blank")
     String name,
@@ -32,4 +34,14 @@ public record SubscriptionRequest(
     @NotBlank(message = "Category cannot be blank")
     String category
 ) {
+    public static Subscription toEntity(SubscriptionRequest request) {
+        var subscription = new Subscription(); 
+        subscription.setUserId(request.userId());
+        subscription.setName(request.name());
+        subscription.setPrice(request.price());
+        subscription.setBillingPeriod(request.billingPeriod());
+        subscription.setRenewalDate(request.renewalDate());
+        subscription.setCategory(request.category());
+        return subscription;
+    }
 }
