@@ -11,5 +11,18 @@ services:
     volumes:
       - auth-db-data:/var/lib/postgresql/data
 
+  subscription-db:
+    container_name: subscription-db
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: subscription_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - subscription-db-data:/var/lib/postgresql/data
+
 volumes:
   auth-db-data:
+  subscription-db-data:
