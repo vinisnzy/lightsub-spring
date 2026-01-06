@@ -50,6 +50,7 @@ public class AuthService {
         .withIssuer("lightsub-auth")
         .withSubject(auth.getName())
         .withClaim("roles", roles)
+        .withClaim("userId", auth.getPrincipal() instanceof UserModel user ? user.getId().toString() : null)
         .withIssuedAt(Instant.now())
         .withExpiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
         .sign(algorithm);
