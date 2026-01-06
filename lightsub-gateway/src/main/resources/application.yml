@@ -18,22 +18,10 @@ spring:
               uri: lb://lightsub-auth-service
               predicates:
                 - Path=/auth/**
-            # - id: user-service
-            #   uri: lb://user-service
-            #   predicates:
-            #     - Path=/user/**
-            # - id: subscription-service
-            #   uri: lb://subscription-service
-            #   predicates:
-            #     - Path=/subscription/**
-            # - id: notification-service
-            #   uri: lb://notification-service
-            #   predicates:
-            #     - Path=/notification/**
-            # - id: billing-service
-            #   uri: lb://billing-service
-            #   predicates:
-            #     - Path=/billing/**
+            - id: subscription-service
+              uri: lb://lightsub-subscription-service
+              predicates:
+                - Path=/subscriptions/**
 eureka:
   client:
     serviceUrl:
