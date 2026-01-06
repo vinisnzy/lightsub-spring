@@ -2,6 +2,7 @@ package com.vinisnzy.lightsub_auth_service.service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,12 +40,16 @@ public class AuthService {
             data.username(),
             data.password()));
 
+    List<String> roles = auth.getAuthorities().stream()
+        .map(grantedAuthority -> grantedAuthority.getAuthority())
+        .toList();
+
     Algorithm algorithm = Algorithm.HMAC256(secret);
 
     String token = JWT.create()
         .withIssuer("lightsub-auth")
         .withSubject(auth.getName())
-        .withClaim("roles", auth.getAuthorities().toString())
+        .withClaim("roles", roles)
         .withIssuedAt(Instant.now())
         .withExpiresAt(Instant.now().plus(1, ChronoUnit.HOURS))
         .sign(algorithm);
