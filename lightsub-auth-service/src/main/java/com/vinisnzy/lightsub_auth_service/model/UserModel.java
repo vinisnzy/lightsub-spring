@@ -26,18 +26,18 @@ public class UserModel implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = GenerationType.UUID)
-  UUID id;
+  private UUID id;
 
   @Column(nullable = false, unique = true)
-  String username;
+  private String username;
 
   @Column(nullable = false)
-  String password;
+  private String password;
 
   @Enumerated(EnumType.STRING)
-  UserRole role = UserRole.USER;
+  private UserRole role = UserRole.USER;
 
-  Boolean enabled = true;
+  private Boolean enabled = true;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
