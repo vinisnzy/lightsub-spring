@@ -16,6 +16,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.vinisnzy.lightsub_auth_service.dto.login.LoginRequest;
 import com.vinisnzy.lightsub_auth_service.dto.login.LoginResponse;
 import com.vinisnzy.lightsub_auth_service.dto.register.RegisterRequest;
+import com.vinisnzy.lightsub_auth_service.exceptions.UsernameAlreadyExistsException;
 import com.vinisnzy.lightsub_auth_service.model.UserModel;
 import com.vinisnzy.lightsub_auth_service.repository.UserRepository;
 
@@ -60,7 +61,7 @@ public class AuthService {
 
   public void register(RegisterRequest data) {
     if (repository.existsByUsername(data.username())) {
-      throw new RuntimeException("Username already exists");
+      throw new UsernameAlreadyExistsException("Username already exists: " + data.username());
     }
     UserModel user = new UserModel();
     user.setUsername(data.username());
