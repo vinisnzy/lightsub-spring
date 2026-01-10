@@ -18,6 +18,7 @@ import com.vinisnzy.lightsub_subscription_service.dtos.SubscriptionRequest;
 import com.vinisnzy.lightsub_subscription_service.dtos.SubscriptionResponse;
 import com.vinisnzy.lightsub_subscription_service.service.SubscriptionService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -42,7 +43,7 @@ public class SubscriptionController {
     @PostMapping
     public ResponseEntity<SubscriptionResponse> createSubscription(
             @RequestHeader("X-User-Id") String userId,
-            @RequestBody SubscriptionRequest data) {
+            @Valid @RequestBody SubscriptionRequest data) {
         var subscription = service.createSubscription(UUID.fromString(userId), data);
         return ResponseEntity.ok(subscription);
     }
@@ -50,7 +51,7 @@ public class SubscriptionController {
     @PutMapping("/{id}")
     public ResponseEntity<SubscriptionResponse> updateSubscription(
             @PathVariable UUID id,
-            @RequestBody SubscriptionRequest data) {
+            @Valid @RequestBody SubscriptionRequest data) {
         var subscription = service.updateSubscription(id, data);
         return ResponseEntity.ok(subscription);
     }
