@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.vinisnzy.lightsub_subscription_service.dtos.SubscriptionRequest;
 import com.vinisnzy.lightsub_subscription_service.dtos.SubscriptionResponse;
+import com.vinisnzy.lightsub_subscription_service.exceptions.ResourceNotFoundException;
 import com.vinisnzy.lightsub_subscription_service.repository.SubscriptionRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class SubscriptionService {
   public SubscriptionResponse getSubscriptionById(UUID subscriptionId) {
     return repository.findById(subscriptionId)
         .map(SubscriptionResponse::fromEntity)
-        .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + subscriptionId));
+        .orElseThrow(() -> new ResourceNotFoundException("Subscription not found with id: " + subscriptionId));
   }
 
   public SubscriptionResponse createSubscription(UUID userId, SubscriptionRequest data) {
@@ -36,7 +37,7 @@ public class SubscriptionService {
 
   public SubscriptionResponse updateSubscription(UUID subscriptionId, SubscriptionRequest data) {
     var subscription = repository.findById(subscriptionId)
-        .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + subscriptionId));
+        .orElseThrow(() -> new ResourceNotFoundException("Subscription not found with id: " + subscriptionId));
 
     subscription.setName(data.name());
     subscription.setPrice(data.price());
@@ -50,7 +51,7 @@ public class SubscriptionService {
 
   public void deleteSubscription(UUID subscriptionId) {
     var subscription = repository.findById(subscriptionId)
-        .orElseThrow(() -> new RuntimeException("Subscription not found with id: " + subscriptionId));
+        .orElseThrow(() -> new ResourceNotFoundException("Subscription not found with id: " + subscriptionId));
     repository.delete(subscription);
   }
 }
