@@ -1,6 +1,7 @@
 package com.vinisnzy.lightsub_subscription_service.exceptions;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,9 +29,12 @@ public class ResourceExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValid(HttpServletRequest request, MethodArgumentNotValidException ex) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
+        String errorMessage = ex.getBindingResult().getFieldErrors().stream()
+                .map(error -> error.getDefaultMessage())
+                .collect(Collectors.joining("; "));
         ErrorResponse errorResponse = new ErrorResponse(
                 status.value(),
-                ex.getMessage(),
+                errorMessage,
                 Instant.now(),
                 request.getRequestURI());
         return ResponseEntity.status(status).body(errorResponse);
