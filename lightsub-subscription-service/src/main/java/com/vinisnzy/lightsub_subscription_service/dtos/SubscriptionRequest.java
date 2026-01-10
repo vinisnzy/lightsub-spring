@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import com.vinisnzy.lightsub_subscription_service.model.Subscription;
-import com.vinisnzy.lightsub_subscription_service.model.dtos.BillingPeriod;
+import com.vinisnzy.lightsub_subscription_service.model.enums.BillingPeriod;
 
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
