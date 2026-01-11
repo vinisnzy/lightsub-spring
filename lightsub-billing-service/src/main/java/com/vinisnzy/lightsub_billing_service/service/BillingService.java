@@ -22,13 +22,7 @@ public class BillingService {
     public ExpensesResponse getSubscriptionsMonthlyExpensesPerCategory(String userId, Optional<String> category) {
         List<SubscriptionResponse> subscriptions = client.getAllSubscriptions(userId);
 
-        BigDecimal amount = subscriptions.stream()
-                .filter(s -> BillingPeriod.MONTHLY.equals(s.billingPeriod()))
-                .filter(s -> category
-                        .map(c -> s.category().equalsIgnoreCase(c))
-                        .orElse(true))
-                .map(SubscriptionResponse::price)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal amount = getAmountByCategoryAndPeriod(subscriptions, category, BillingPeriod.MONTHLY);
 
         return new ExpensesResponse(category.orElse("ALL"), BillingPeriod.MONTHLY, amount);
     }
@@ -36,15 +30,19 @@ public class BillingService {
     public ExpensesResponse getSubscriptionsYearlyExpensesPerCategory(String userId, Optional<String> category) {
         List<SubscriptionResponse> subscriptions = client.getAllSubscriptions(userId);
 
-        BigDecimal amount = subscriptions.stream()
-                .filter(s -> BillingPeriod.YEARLY.equals(s.billingPeriod()))
-                .filter(s -> category
-                    .map(c -> s.category().equalsIgnoreCase(c))
-                    .orElse(true)
-                )
-                .map(SubscriptionResponse::price)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        BigDecimal amount = getAmountByCategoryAndPeriod(subscriptions, category, BillingPeriod.YEARLY);
 
         return new ExpensesResponse(category.orElse("ALL"), BillingPeriod.YEARLY, amount);
+    }
+
+    private BigDecimal getAmountByCategoryAndPeriod(List<SubscriptionResponse> subscriptions, Optional<String> category,
+            BillingPeriod period) {
+        return subscriptions.stream()
+                .filter(s -> period.equals(s.billingPeriod()))
+                .filter(s -> category
+                        .map(c -> s.category().equalsIgnoreCase(c))
+                        .orElse(true))
+                .map(SubscriptionResponse::price)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
