@@ -1,4 +1,4 @@
-package com.vinisnzy.lightsub_auth_service.service;
+package com.vinisnzy.lightsub_auth_service.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -32,6 +32,7 @@ import com.vinisnzy.lightsub_auth_service.dto.register.RegisterRequest;
 import com.vinisnzy.lightsub_auth_service.exceptions.UsernameAlreadyExistsException;
 import com.vinisnzy.lightsub_auth_service.model.UserModel;
 import com.vinisnzy.lightsub_auth_service.repository.UserRepository;
+import com.vinisnzy.lightsub_auth_service.service.AuthService;
 
 @ExtendWith(MockitoExtension.class)
 class AuthServiceTest {
