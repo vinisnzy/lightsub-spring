@@ -1,4 +1,4 @@
-package com.vinisnzy.lightsub_subscription_service.service;
+package com.vinisnzy.lightsub_subscription_service.unit.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -27,6 +27,7 @@ import com.vinisnzy.lightsub_subscription_service.exceptions.ResourceNotFoundExc
 import com.vinisnzy.lightsub_subscription_service.model.Subscription;
 import com.vinisnzy.lightsub_subscription_service.model.enums.BillingPeriod;
 import com.vinisnzy.lightsub_subscription_service.repository.SubscriptionRepository;
+import com.vinisnzy.lightsub_subscription_service.service.SubscriptionService;
 
 @ExtendWith(MockitoExtension.class)
 class SubscriptionServiceTest {
