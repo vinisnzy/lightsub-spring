@@ -22,6 +22,13 @@ services:
       - "5434:5432"
     volumes:
       - subscription-db-data:/var/lib/postgresql/data
+  
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:4-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
 
 volumes:
   auth-db-data:
