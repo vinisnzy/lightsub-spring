@@ -22,6 +22,14 @@ services:
       - "5434:5432"
     volumes:
       - subscription-db-data:/var/lib/postgresql/data
+  
+  zipkin:
+    container_name: zipkin
+    image: openzipkin/zipkin:latest
+    environment:
+      - STORAGE_TYPE=mem
+    ports:
+      - 9411:9411
 
 volumes:
   auth-db-data:
