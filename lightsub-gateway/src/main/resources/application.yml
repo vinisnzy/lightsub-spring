@@ -36,3 +36,8 @@ eureka:
 security:
   jwt:
     secret: ${JWT_SECRET}
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
